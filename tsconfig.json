@@ -1,0 +1,8 @@
+{
+	"compilerOptions": {
+		"outDir": "release",
+		"target": "ES2016",
+		"strict": true
+	},
+	"include": ["src/**/*"]
+}

@@ -1,0 +1,102 @@
+/* Variables */
+:root {
+  --global-padding: 0.3em;
+}
+
+/* Defaults */
+* {
+  box-sizing: border-box;
+}
+
+html, body, main, div {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body, main {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+html {
+  font-size: 14px;
+}
+
+header {
+  margin: 0;
+  padding: var(--global-padding);
+  width: 100%;
+  background-color: hsl(40, 80%, 75%);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+html, body, main, div {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+header > * {
+  margin: 0;
+}
+
+/* Classes */
+.search-controls {
+  padding: var(--global-padding);
+  background-color: hsl(130, 80%, 75%);
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.results {
+  padding: var(--global-padding);
+  background-color: hsl(260, 20%, 70%);
+  flex-grow: 1;
+}
+
+.component-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  gap: var(--global-padding);
+}
+
+.component-list > li {
+  --size: 1.5em;
+  box-sizing: content-box;
+  width: var(--size);
+  height: var(--size);
+
+  border: 0.1em solid black;
+  border-radius: var(--global-padding);
+
+  text-align: center;
+  line-height: var(--size);
+  font-weight: bold;
+}
+
+.component-list > li.component {
+  background-color: hsl(280, 20%, 85%);
+}
+
+.component-list > li.stroke-count {
+  background-color: hsl(180, 50%, 95%);
+}
+
+/* Media Queries */
+
+@media only screen and (orientation: landscape) {
+  main {
+    flex-flow: row;
+  }
+}
