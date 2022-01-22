@@ -2,7 +2,11 @@
 	"compilerOptions": {
 		"outDir": "release",
 		"target": "ES2016",
-		"strict": true
+		"strict": true,
+        "lib": [
+            "es2020",
+            "dom"
+        ]
 	},
 	"include": ["src/**/*"]
 }
