@@ -93,6 +93,11 @@ header > * {
   background-color: hsl(180, 50%, 95%);
 }
 
+.component-list > li.active-component {
+  background-color: hsl(300, 75%, 50%);
+  color: hsl(65, 80%, 85%);
+}
+
 /* Media Queries */
 
 @media only screen and (orientation: landscape) {

@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export { getKanjiComponents, initComponentList };
+export { KanjiComponents };
 // Gets all the kanji components from radkfile
 function getKanjiComponents() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -30,7 +30,7 @@ function getKanjiComponents() {
 }
 // Initializes the component list
 // TODO: Make this hardcoded
-function initComponentList(kanjiComponents) {
+function populateComponentList(kanjiComponents) {
     const radicalList = document.querySelector(".component-list");
     if (radicalList === null) {
         throw "Couldn't find component list";
@@ -56,5 +56,48 @@ function initComponentList(kanjiComponents) {
                 appendComponent(kanji);
             }
         }
+    }
+}
+class KanjiComponents {
+    constructor() {
+        this.state = {};
+        this.kanjiComponents = [];
+    }
+    init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.kanjiComponents = yield getKanjiComponents();
+            populateComponentList(this.kanjiComponents);
+            this.connectDomComponentList();
+            this.initState();
+        });
+    }
+    connectDomComponentList() {
+        for (const comp of document.querySelectorAll(".component-list > .component")) {
+            comp.addEventListener("click", (event) => {
+                const compButton = event.target;
+                const comp = compButton.innerText;
+                this.state[comp] = !this.state[comp];
+                // Update DOM
+                if (this.state[comp]) {
+                    compButton.className = "component active-component";
+                }
+                else {
+                    compButton.className = "component";
+                }
+            });
+        }
+    }
+    initState() {
+        for (const nStrokeComps of this.kanjiComponents) {
+            if (nStrokeComps === undefined) {
+                continue;
+            }
+            for (const comp of nStrokeComps) {
+                this.state[comp] = false;
+            }
+        }
+    }
+    // Toggles the state of the given component
+    toggleComponentState(comp) {
     }
 }

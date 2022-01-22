@@ -1,10 +1,13 @@
-export {getKanjiComponents, initComponentList};
+export { KanjiComponents };
+
+type KanjiComponentsList = string[][];
+type ComponentsState = Record<string, boolean>;
 
 // Gets all the kanji components from radkfile
 async function getKanjiComponents() {
   const request = await fetch("radkfile-utf8");
   const text = await request.text();
-  const kanjiComponents: Array<Array<string>> = [];
+  const kanjiComponents: KanjiComponentsList = [];
   for (const match of text.matchAll(/^\$.*$/gm)) {
     const splitMatch = match[0].split(" ");
     const comp = splitMatch[1];
@@ -20,7 +23,7 @@ async function getKanjiComponents() {
 
 // Initializes the component list
 // TODO: Make this hardcoded
-function initComponentList(kanjiComponents: Array<Array<string>>) {
+function populateComponentList(kanjiComponents: KanjiComponentsList) {
   const radicalList = document.querySelector(".component-list");
   if (radicalList === null) {
     throw "Couldn't find component list";
@@ -50,5 +53,50 @@ function initComponentList(kanjiComponents: Array<Array<string>>) {
         appendComponent(kanji);
       }
     }
+  }
+}
+
+class KanjiComponents {
+  state: ComponentsState = {};
+  kanjiComponents: KanjiComponentsList = [];
+
+  async init() {
+    this.kanjiComponents = await getKanjiComponents();
+    populateComponentList(this.kanjiComponents);
+    this.connectDomComponentList();
+    this.initState();
+  }
+
+  private connectDomComponentList() {
+    for (const comp of document.querySelectorAll(".component-list > .component")) {
+      comp.addEventListener("click", (event) => {
+        const compButton = event.target as HTMLElement;
+        const comp = compButton.innerText;
+        this.state[comp] = !this.state[comp];
+
+        // Update DOM
+        if (this.state[comp]) {
+          compButton.className = "component active-component";
+        } else {
+          compButton.className = "component";
+        }
+      });
+    }
+  }
+
+  private initState() {
+    for (const nStrokeComps of this.kanjiComponents) {
+      if (nStrokeComps === undefined) {
+        continue;
+      }
+
+      for (const comp of nStrokeComps) {
+        this.state[comp] = false;
+      }
+    }
+  }
+
+  // Toggles the state of the given component
+  private toggleComponentState(comp: string) {
   }
 }
