@@ -58,6 +58,7 @@ function populateComponentList(kanjiComponents) {
         }
     }
 }
+const componentListChangedEvent = new Event("componentlistchanged");
 class KanjiComponents {
     constructor() {
         this.state = {};
@@ -84,6 +85,8 @@ class KanjiComponents {
                 else {
                     compButton.className = "component";
                 }
+                // Emit event
+                document.dispatchEvent(componentListChangedEvent);
             });
         }
     }
@@ -96,8 +99,5 @@ class KanjiComponents {
                 this.state[comp] = false;
             }
         }
-    }
-    // Toggles the state of the given component
-    toggleComponentState(comp) {
     }
 }

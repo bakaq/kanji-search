@@ -59,6 +59,7 @@ header > * {
   padding: var(--global-padding);
   background-color: hsl(260, 20%, 70%);
   flex-grow: 1;
+  overflow: auto;
 }
 
 .component-list {
@@ -96,6 +97,38 @@ header > * {
 .component-list > li.active-component {
   background-color: hsl(300, 75%, 50%);
   color: hsl(65, 80%, 85%);
+}
+
+.result-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  gap: var(--global-padding);
+}
+
+.result-list > li {
+  --size: 1.5em;
+  box-sizing: content-box;
+  width: var(--size);
+  height: var(--size);
+
+  border: 0.1em solid black;
+  border-radius: var(--global-padding);
+
+  text-align: center;
+  line-height: var(--size);
+  font-weight: bold;
+}
+
+.result-list > li.result {
+  background-color: hsl(280, 20%, 85%);
+}
+
+.result-list > li.stroke-count {
+  background-color: hsl(180, 50%, 95%);
 }
 
 /* Media Queries */

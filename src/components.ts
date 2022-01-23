@@ -56,6 +56,8 @@ function populateComponentList(kanjiComponents: KanjiComponentsList) {
   }
 }
 
+const componentListChangedEvent = new Event("componentlistchanged");
+
 class KanjiComponents {
   state: ComponentsState = {};
   kanjiComponents: KanjiComponentsList = [];
@@ -80,6 +82,9 @@ class KanjiComponents {
         } else {
           compButton.className = "component";
         }
+
+        // Emit event
+        document.dispatchEvent(componentListChangedEvent);
       });
     }
   }
@@ -94,9 +99,5 @@ class KanjiComponents {
         this.state[comp] = false;
       }
     }
-  }
-
-  // Toggles the state of the given component
-  private toggleComponentState(comp: string) {
   }
 }
