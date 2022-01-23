@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { KanjiComponents } from "./components.js";
+import { ComponentSearchPanel } from "./components.js";
 // Searchs the kanji with the given components
 function searchByComponents(componentList, radk) {
     if (componentList.length === 0) {
@@ -24,12 +24,11 @@ function searchByComponents(componentList, radk) {
 }
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
-        // Initializes the component list
-        const components = new KanjiComponents();
-        yield components.init();
         // Preload radk.json
         const request = yield fetch("radk.json");
         const radk = yield request.json();
+        // Initializes the component list
+        const componentPanel = new ComponentSearchPanel(radk);
         // Connects the results
         document.addEventListener("componentlistchanged", (e) => {
             const resultList = document.querySelector(".result-list");
@@ -38,8 +37,8 @@ function init() {
             }
             resultList.innerHTML = "";
             // Filters the active components
-            const activeCompList = Object.entries(components.state).filter(([comp, state]) => {
-                return state;
+            const activeCompList = Object.entries(componentPanel.state).filter(([comp, state]) => {
+                return state === "active";
             }).map(([comp,]) => {
                 return comp;
             });

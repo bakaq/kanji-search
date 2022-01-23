@@ -1,10 +1,7 @@
 import type { BaseComponent } from "./components.js";
+import type { Kanji, RadkJson } from "./kanji.js";
 
-import { KanjiComponents } from "./components.js";
-
-type Kanji = string;
-
-type RadkJson = Record<BaseComponent, {strokes: number, kanji: Kanji[]}>;
+import { ComponentSearchPanel } from "./components.js";
 
 // Searchs the kanji with the given components
 function searchByComponents(componentList: BaseComponent[], radk: RadkJson): Kanji[] {
@@ -25,13 +22,12 @@ function searchByComponents(componentList: BaseComponent[], radk: RadkJson): Kan
 }
 
 async function init() {
-  // Initializes the component list
-  const components = new KanjiComponents();
-  await components.init();
-
   // Preload radk.json
   const request = await fetch("radk.json");
   const radk = await request.json();
+
+  // Initializes the component list
+  const componentPanel = new ComponentSearchPanel(radk);
 
   // Connects the results
   document.addEventListener("componentlistchanged", (e) => {
@@ -42,8 +38,8 @@ async function init() {
     resultList.innerHTML = "";
 
     // Filters the active components
-    const activeCompList = Object.entries(components.state).filter(([comp, state]) => {
-      return state;
+    const activeCompList = Object.entries(componentPanel.state).filter(([comp, state]) => {
+      return state === "active";
     }).map(([comp, ]) => {
       return comp;
     });

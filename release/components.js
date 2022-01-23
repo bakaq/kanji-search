@@ -1,31 +1,21 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-// Gets all the kanji components from radkfile
-function getKanjiComponents() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const request = yield fetch("radkfile-utf8");
-        const text = yield request.text();
-        const kanjiComponents = [];
-        for (const match of text.matchAll(/^\$.*$/gm)) {
-            const splitMatch = match[0].split(" ");
-            const comp = splitMatch[1];
-            const idx = parseInt(splitMatch[2]) - 1;
-            if (kanjiComponents[idx] !== undefined) {
-                kanjiComponents[idx].push(comp);
-            }
-            else {
-                kanjiComponents[idx] = [comp];
-            }
+// Gets all the kanji components from radk
+function getKanjiComponents(radk) {
+    const kanjiComponentsArray = [];
+    for (const [comp, { strokes, }] of Object.entries(radk)) {
+        if (kanjiComponentsArray[strokes] === undefined) {
+            kanjiComponentsArray[strokes] = [comp];
         }
-        return kanjiComponents;
+        else {
+            kanjiComponentsArray[strokes].push(comp);
+        }
+    }
+    const kanjiComponents = [];
+    kanjiComponentsArray.forEach((comps, idx) => {
+        if (comps !== undefined) {
+            kanjiComponents.push({ strokes: idx, components: comps });
+        }
     });
+    return kanjiComponents;
 }
 // Initializes the component list
 // TODO: Make this hardcoded
@@ -47,55 +37,50 @@ function populateComponentList(kanjiComponents) {
         component.className = "stroke-count";
         radicalList.appendChild(component);
     };
-    for (let i = 0; i < kanjiComponents.length; i++) {
-        if (kanjiComponents[i] !== undefined) {
-            // Number of strokes
-            appendStrokeCount(i + 1);
-            for (const kanji of kanjiComponents[i]) {
-                appendComponent(kanji);
-            }
+    for (const { strokes, components } of kanjiComponents) {
+        appendStrokeCount(strokes);
+        for (const comp of components) {
+            appendComponent(comp);
         }
     }
 }
 const componentListChangedEvent = new Event("componentlistchanged");
-export class KanjiComponents {
-    constructor() {
-        this.state = {};
-        this.kanjiComponents = [];
-    }
-    init() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.kanjiComponents = yield getKanjiComponents();
-            populateComponentList(this.kanjiComponents);
-            this.connectDomComponentList();
-            this.initState();
-        });
-    }
-    connectDomComponentList() {
+export class ComponentSearchPanel {
+    constructor(radk) {
+        // Init component list
+        this.kanjiComponents = getKanjiComponents(radk);
+        populateComponentList(this.kanjiComponents);
+        // Connect the DOM
         for (const comp of document.querySelectorAll(".component-list > .component")) {
             comp.addEventListener("click", (event) => {
                 const compButton = event.target;
                 const comp = compButton.innerText;
-                this.state[comp] = !this.state[comp];
-                // Update DOM
-                if (this.state[comp]) {
-                    compButton.className = "component active-component";
-                }
-                else {
-                    compButton.className = "component";
+                // Handle state change and change DOM
+                // TODO: check and show unavailable components
+                switch (this.state[comp]) {
+                    case "unavailable":
+                        return;
+                        break;
+                    case "available":
+                        this.state[comp] = "active";
+                        compButton.className = "component active-component";
+                        break;
+                    case "active":
+                        this.state[comp] = "available";
+                        compButton.className = "component";
+                        break;
+                    default:
+                        throw "Invalid state";
                 }
                 // Emit event
                 document.dispatchEvent(componentListChangedEvent);
             });
         }
-    }
-    initState() {
-        for (const nStrokeComps of this.kanjiComponents) {
-            if (nStrokeComps === undefined) {
-                continue;
-            }
-            for (const comp of nStrokeComps) {
-                this.state[comp] = false;
+        // Init state
+        this.state = {};
+        for (const { strokes, components } of this.kanjiComponents) {
+            for (const comp of components) {
+                this.state[comp] = "available";
             }
         }
     }
