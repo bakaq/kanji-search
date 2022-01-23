@@ -1,29 +1,23 @@
+import type { BaseComponent } from "./components.js";
+
 import { KanjiComponents } from "./components.js";
 
-// Searches the kanji with the given component
-function searchByComponent(comp: string, radkfile: string): string[] {
-  console.log(`Searching component: ${comp}`);
+type Kanji = string;
 
-  const regex = new RegExp(`\\$ ${comp}.*\n((?:.|\n)*?)\n\\$`, "g");
-  const matches = radkfile.matchAll(regex);
-  const match = matches.next().value[1];
-  return match.split("\n").join().split("");
-} 
+type RadkJson = Record<BaseComponent, {strokes: number, kanji: Kanji[]}>;
 
 // Searchs the kanji with the given components
-function searchByComponents(componentList: string[], radkfile: string): string[] {
+function searchByComponents(componentList: BaseComponent[], radk: RadkJson): Kanji[] {
   if (componentList.length === 0) {
     return [];
   }
 
-  let kanjiList = searchByComponent(componentList[0], radkfile);
+  let kanjiList = radk[componentList[0]].kanji;
 
   for (const comp of componentList.slice(1)) {
-    console.log(`Searching ${comp}`);
     // Intersection
-    const compKanji = searchByComponent(comp, radkfile);
     kanjiList = kanjiList.filter((value) => {
-      return compKanji.includes(value);
+      return radk[comp].kanji.includes(value);
     });
   }
 
@@ -35,9 +29,9 @@ async function init() {
   const components = new KanjiComponents();
   await components.init();
 
-  // Preload radkfile
-  const request = await fetch("radkfile-utf8");
-  const radkfile = await request.text();
+  // Preload radk.json
+  const request = await fetch("radk.json");
+  const radk = await request.json();
 
   // Connects the results
   document.addEventListener("componentlistchanged", (e) => {
@@ -55,10 +49,14 @@ async function init() {
     });
 
     // TODO: Organize by number of strokes
+    // TODO: Buffer output to DOM
 
     // Shows the results
-    for (const result of searchByComponents(activeCompList, radkfile))  {
-      resultList.innerHTML += `<li class="result">${result}</li>`;
+    for (const result of searchByComponents(activeCompList, radk))  {
+      let resultElement = document.createElement("li");
+      resultElement.className = "result";
+      resultElement.innerText = result;
+      resultList.appendChild(resultElement);
     }
   });
 }

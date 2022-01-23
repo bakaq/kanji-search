@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export { KanjiComponents };
 // Gets all the kanji components from radkfile
 function getKanjiComponents() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -59,7 +58,7 @@ function populateComponentList(kanjiComponents) {
     }
 }
 const componentListChangedEvent = new Event("componentlistchanged");
-class KanjiComponents {
+export class KanjiComponents {
     constructor() {
         this.state = {};
         this.kanjiComponents = [];

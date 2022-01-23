@@ -8,26 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { KanjiComponents } from "./components.js";
-// Searches the kanji with the given component
-function searchByComponent(comp, radkfile) {
-    console.log(`Searching component: ${comp}`);
-    const regex = new RegExp(`\\$ ${comp}.*\n((?:.|\n)*?)\n\\$`, "g");
-    const matches = radkfile.matchAll(regex);
-    const match = matches.next().value[1];
-    return match.split("\n").join().split("");
-}
 // Searchs the kanji with the given components
-function searchByComponents(componentList, radkfile) {
+function searchByComponents(componentList, radk) {
     if (componentList.length === 0) {
         return [];
     }
-    let kanjiList = searchByComponent(componentList[0], radkfile);
+    let kanjiList = radk[componentList[0]].kanji;
     for (const comp of componentList.slice(1)) {
-        console.log(`Searching ${comp}`);
         // Intersection
-        const compKanji = searchByComponent(comp, radkfile);
         kanjiList = kanjiList.filter((value) => {
-            return compKanji.includes(value);
+            return radk[comp].kanji.includes(value);
         });
     }
     return kanjiList;
@@ -37,9 +27,9 @@ function init() {
         // Initializes the component list
         const components = new KanjiComponents();
         yield components.init();
-        // Preload radkfile
-        const request = yield fetch("radkfile-utf8");
-        const radkfile = yield request.text();
+        // Preload radk.json
+        const request = yield fetch("radk.json");
+        const radk = yield request.json();
         // Connects the results
         document.addEventListener("componentlistchanged", (e) => {
             const resultList = document.querySelector(".result-list");
@@ -54,9 +44,13 @@ function init() {
                 return comp;
             });
             // TODO: Organize by number of strokes
+            // TODO: Buffer output to DOM
             // Shows the results
-            for (const result of searchByComponents(activeCompList, radkfile)) {
-                resultList.innerHTML += `<li class="result">${result}</li>`;
+            for (const result of searchByComponents(activeCompList, radk)) {
+                let resultElement = document.createElement("li");
+                resultElement.className = "result";
+                resultElement.innerText = result;
+                resultList.appendChild(resultElement);
             }
         });
     });

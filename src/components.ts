@@ -1,7 +1,8 @@
-export { KanjiComponents };
+// TODO: Make a exhaustive Union
+export type BaseComponent = string;
 
-type KanjiComponentsList = string[][];
-type ComponentsState = Record<string, boolean>;
+type KanjiComponentsList = BaseComponent[][];
+type ComponentsState = Record<BaseComponent, boolean>;
 
 // Gets all the kanji components from radkfile
 async function getKanjiComponents() {
@@ -31,7 +32,7 @@ function populateComponentList(kanjiComponents: KanjiComponentsList) {
 
   radicalList.innerHTML = '';
 
-  const appendComponent = (comp: string) => {
+  const appendComponent = (comp: BaseComponent) => {
     const component = document.createElement("li");
     component.innerText = comp;
     component.className = "component";
@@ -58,7 +59,7 @@ function populateComponentList(kanjiComponents: KanjiComponentsList) {
 
 const componentListChangedEvent = new Event("componentlistchanged");
 
-class KanjiComponents {
+export class KanjiComponents {
   state: ComponentsState = {};
   kanjiComponents: KanjiComponentsList = [];
 
