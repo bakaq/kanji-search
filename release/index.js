@@ -7,28 +7,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { ComponentSearchPanel } from "./components.js";
-// Searchs the kanji with the given components
-function searchByComponents(componentList, radk) {
-    if (componentList.length === 0) {
-        return [];
-    }
-    let kanjiList = radk[componentList[0]].kanji;
-    for (const comp of componentList.slice(1)) {
-        // Intersection
-        kanjiList = kanjiList.filter((value) => {
-            return radk[comp].kanji.includes(value);
-        });
-    }
-    return kanjiList;
-}
+import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
+import { Kanji } from "./kanji.js";
+import { loadRadk, loadKrad } from "./radk.js";
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
-        // Preload radk.json
-        const request = yield fetch("radk.json");
-        const radk = yield request.json();
+        // Preload radk.json and krad.json
+        const [radk, krad] = yield Promise.all([loadRadk("radk.json"), loadKrad("krad.json")]);
         // Initializes the component list
-        const componentPanel = new ComponentSearchPanel(radk);
+        const componentPanel = new ComponentSearchPanel(radk, krad);
         // Connects the results
         document.addEventListener("componentlistchanged", (e) => {
             const resultList = document.querySelector(".result-list");
@@ -45,10 +32,10 @@ function init() {
             // TODO: Organize by number of strokes
             // TODO: Buffer output to DOM
             // Shows the results
-            for (const result of searchByComponents(activeCompList, radk)) {
+            for (const result of Kanji.searchByComponents(activeCompList, radk)) {
                 let resultElement = document.createElement("li");
                 resultElement.className = "result";
-                resultElement.innerText = result;
+                resultElement.innerText = result.char;
                 resultList.appendChild(resultElement);
             }
         });

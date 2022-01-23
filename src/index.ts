@@ -1,33 +1,16 @@
 import type { BaseComponent } from "./components.js";
-import type { Kanji, RadkJson } from "./kanji.js";
+import type { Radk, Krad } from "./radk.js";
 
-import { ComponentSearchPanel } from "./components.js";
-
-// Searchs the kanji with the given components
-function searchByComponents(componentList: BaseComponent[], radk: RadkJson): Kanji[] {
-  if (componentList.length === 0) {
-    return [];
-  }
-
-  let kanjiList = radk[componentList[0]].kanji;
-
-  for (const comp of componentList.slice(1)) {
-    // Intersection
-    kanjiList = kanjiList.filter((value) => {
-      return radk[comp].kanji.includes(value);
-    });
-  }
-
-  return kanjiList;
-}
+import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
+import { Kanji } from "./kanji.js";
+import { loadRadk, loadKrad } from "./radk.js";
 
 async function init() {
-  // Preload radk.json
-  const request = await fetch("radk.json");
-  const radk = await request.json();
+  // Preload radk.json and krad.json
+  const [radk, krad] = await Promise.all([loadRadk("radk.json"), loadKrad("krad.json")]);
 
   // Initializes the component list
-  const componentPanel = new ComponentSearchPanel(radk);
+  const componentPanel = new ComponentSearchPanel(radk, krad);
 
   // Connects the results
   document.addEventListener("componentlistchanged", (e) => {
@@ -48,10 +31,10 @@ async function init() {
     // TODO: Buffer output to DOM
 
     // Shows the results
-    for (const result of searchByComponents(activeCompList, radk))  {
+    for (const result of Kanji.searchByComponents(activeCompList, radk))  {
       let resultElement = document.createElement("li");
       resultElement.className = "result";
-      resultElement.innerText = result;
+      resultElement.innerText = result.char;
       resultList.appendChild(resultElement);
     }
   });

@@ -99,6 +99,11 @@ header > * {
   color: hsl(65, 80%, 85%);
 }
 
+.component-list > li.unavailable-component {
+  background-color: hsl(280, 20%, 30%);
+  color: hsl(0, 0%, 70%);
+}
+
 .result-list {
   margin: 0;
   padding: 0;
