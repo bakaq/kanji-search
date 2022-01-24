@@ -1,5 +1,21 @@
 <!DOCTYPE html>
 <html>
+  <!--
+  Copyright 2022 Kauê Hunnicutt Bazilli
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later
+  version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  details.
+
+  You should have received a copy of the GNU General Public License along with
+  this program. If not, see <https://www.gnu.org/licenses/>.
+  -->
   <head>
     <title>Kanji Dict</title>
     <meta charset="utf-8">
@@ -8,7 +24,7 @@
   </head>
   <body>
     <header>
-      <h1 class="header-title">Kanji Dict</h1>
+      <h1 class="header-title">Kanji Search</h1>
     </header>
     <main>
       <div class="results">
@@ -16,10 +32,49 @@
         </ul>
       </div>
       <div class="search-controls">
+        <!-- TODO: Hardcode this -->
         <ul class="component-list"></ul>
       </div>
     </main>
+    <footer>
+      This site uses the
+      <a href="http://www.edrdg.org/wiki/index.php/KANJIDIC_Project">
+        Kanjidic2
+      </a>
+      and
+      <a href="http://www.edrdg.org/krad/kradinf.html">
+        Radkfile
+      </a>
+      dictionary files. These files
+      are the property of the
+      <a href="http://www.edrdg.org/">
+        Electronic Dictionary Research and Development Group
+      </a>
+      , and are used in conformance with the Group's
+      <a href="http://www.edrdg.org/edrdg/licence.html">
+        licence
+      </a>
+      .
+    </footer>
     <script type="module" src="release/index.js"></script>
+    <script>
+      // TODO: This is VERY ugly, find a better way in CSS
+      function fitMain() {
+        const header = document.querySelector("header");
+        const main = document.querySelector("main");
+        const footer = document.querySelector("footer");
+        let newHeight = (
+          document.body.getBoundingClientRect().height
+          - header.getBoundingClientRect().height
+          - footer.getBoundingClientRect().height
+        );
+        main.style.height = newHeight.toString() + "px";
+      }
+
+      window.addEventListener("resize", fitMain);
+
+      fitMain();
+    </script>
   </body>
 </html>
 

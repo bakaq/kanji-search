@@ -1,3 +1,17 @@
+// Copyright 2022 Kauê Hunnicutt Bazilli
+// 
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+// 
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+// details.
+// 
+// You should have received a copy of the GNU General Public License along with
+// this program. If not, see <https://www.gnu.org/licenses/>.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16,7 +30,9 @@ export function loadRadk(url) {
         for (const comp of Object.keys(radkRaw)) {
             radk[comp] = {
                 strokes: radkRaw[comp].strokes,
-                kanji: radkRaw[comp].kanji.map((char) => new Kanji(char)),
+                kanji: radkRaw[comp].kanji.map((char) => {
+                    return new Kanji(char);
+                }),
             };
         }
         return radk;

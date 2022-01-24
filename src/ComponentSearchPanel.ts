@@ -1,10 +1,28 @@
+// Copyright 2022 Kauê Hunnicutt Bazilli
+// 
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+// 
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+// details.
+// 
+// You should have received a copy of the GNU General Public License along with
+// this program. If not, see <https://www.gnu.org/licenses/>.
+
 import type { BaseComponent } from "./components.js";
 import type { Radk, KanjiInfo } from "./kanjiInfo.js";
 
 import { Kanji } from "./kanji.js";
 
 type ComponentState = "available" | "unavailable" | "active";
-type ComponentsWithStrokeCounts = Array<{strokes: number, components: BaseComponent[]}>;
+type ComponentsWithStrokeCounts = Array<{
+  strokes: number,
+  components: BaseComponent[],
+}>;
 
 
 // Gets all the kanji components from radk
@@ -121,7 +139,9 @@ export class ComponentSearchPanel {
     this.state[component] = newState;
 
     // Filters the active components
-    const activeCompList = Object.entries(this.state).filter(([comp, state]) => {
+    const activeCompList = Object.entries(
+      this.state
+    ).filter(([comp, state]) => {
       return state === "active";
     }).map(([comp, ]) => {
       return comp;
@@ -165,7 +185,10 @@ export class ComponentSearchPanel {
         },
       },
     );
-    document.querySelector(".component-list")!.dispatchEvent(componentListChangeEvent);
+
+    // TODO: Proper error handling
+    document.querySelector(".component-list")!
+            .dispatchEvent(componentListChangeEvent);
   }
 
   private updateDOM() {

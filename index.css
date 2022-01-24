@@ -1,3 +1,19 @@
+/* Copyright 2022 Kauê Hunnicutt Bazilli
+ * 
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https: *www.gnu.org/licenses/>.
+ */
+
 /* Variables */
 :root {
   --global-padding: 0.3em;
@@ -29,16 +45,12 @@ main {
   margin: 0;
   padding: 0;
   width: 100%;
-  /* TODO: This is kinda uggly, find a better way */
-  height: calc(100% - 1.2em - 2*var(--global-padding));
 }
 
 header {
   margin: 0;
   padding: var(--global-padding);
   width: 100%;
-  /* TODO: This is kinda uggly, find a better way */
-  height: calc(1.2em + 2*var(--global-padding));
   background-color: hsl(40, 80%, 75%);
   display: flex;
   flex-flow: row nowrap;
@@ -46,9 +58,15 @@ header {
   align-items: center;
 }
 
-
 header > * {
   margin: 0;
+}
+
+footer {
+  background-color: hsl(50, 80%, 80%);
+  font-size: 0.7em;
+  width: 100%;
+  text-align: center;
 }
 
 /* Classes */
