@@ -1,5 +1,4 @@
 import { Kanji } from "./kanji.js";
-const componentListChangedEvent = new Event("componentlistchanged");
 // Gets all the kanji components from radk
 function getKanjiComponents(radk) {
     const kanjiComponentsArray = [];
@@ -126,7 +125,12 @@ export class ComponentSearchPanel {
             }
         }
         // Emit event
-        document.dispatchEvent(componentListChangedEvent);
+        const componentListChangeEvent = new CustomEvent("componentlistchange", {
+            detail: {
+                selectedKanji: this.selectedKanji,
+            },
+        });
+        document.querySelector(".component-list").dispatchEvent(componentListChangeEvent);
     }
     updateDOM() {
         // Map from state to className

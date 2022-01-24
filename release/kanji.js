@@ -5,6 +5,9 @@ export class Kanji {
     getComponents(kanjiInfo) {
         return kanjiInfo[this.char].components;
     }
+    getStrokes(kanjiInfo) {
+        return kanjiInfo[this.char].strokes;
+    }
     // Searchs the kanji with the given components
     static searchByComponents(componentList, radk) {
         if (componentList.length === 0) {

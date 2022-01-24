@@ -11,6 +11,10 @@ export class Kanji {
   getComponents(kanjiInfo: KanjiInfo): BaseComponent[] {
     return kanjiInfo[this.char].components;
   }
+
+  getStrokes(kanjiInfo: KanjiInfo): number {
+    return kanjiInfo[this.char].strokes;
+  }
   
   // Searchs the kanji with the given components
   static searchByComponents(componentList: BaseComponent[], radk: Radk): Kanji[] {

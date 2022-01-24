@@ -6,7 +6,6 @@ import { Kanji } from "./kanji.js";
 type ComponentState = "available" | "unavailable" | "active";
 type ComponentsWithStrokeCounts = Array<{strokes: number, components: BaseComponent[]}>;
 
-const componentListChangedEvent = new Event("componentlistchanged");
 
 // Gets all the kanji components from radk
 function getKanjiComponents(radk: Radk): ComponentsWithStrokeCounts {
@@ -158,7 +157,15 @@ export class ComponentSearchPanel {
     }
 
     // Emit event
-    document.dispatchEvent(componentListChangedEvent);
+    const componentListChangeEvent = new CustomEvent(
+      "componentlistchange",
+      {
+        detail: {
+          selectedKanji: this.selectedKanji,
+        },
+      },
+    );
+    document.querySelector(".component-list")!.dispatchEvent(componentListChangeEvent);
   }
 
   private updateDOM() {
