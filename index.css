@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-html, body, main, div {
+html, body, div {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -22,13 +22,23 @@ body, main {
 }
 
 html {
-  font-size: 14px;
+  font-size: 16px;
+}
+
+main {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* TODO: This is kinda uggly, find a better way */
+  height: calc(100% - 1.2em - 2*var(--global-padding));
 }
 
 header {
   margin: 0;
   padding: var(--global-padding);
   width: 100%;
+  /* TODO: This is kinda uggly, find a better way */
+  height: calc(1.2em + 2*var(--global-padding));
   background-color: hsl(40, 80%, 75%);
   display: flex;
   flex-flow: row nowrap;
@@ -36,18 +46,17 @@ header {
   align-items: center;
 }
 
-html, body, main, div {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
 
 header > * {
   margin: 0;
 }
 
 /* Classes */
+
+.header-title {
+  font-size: 1.2em;
+}
+
 .search-controls {
   padding: var(--global-padding);
   background-color: hsl(130, 80%, 75%);
@@ -88,6 +97,11 @@ header > * {
 
 .component-list > li.component {
   background-color: hsl(280, 20%, 85%);
+  cursor: pointer;
+}
+
+.component-list > li.component:not(.unavailable-component):hover {
+  background-color: hsl(260, 25%, 70%);
 }
 
 .component-list > li.stroke-count {
@@ -99,9 +113,16 @@ header > * {
   color: hsl(65, 80%, 85%);
 }
 
+.component-list > li.active-component:hover {
+  background-color: hsl(300, 50%, 50%);
+  color: hsl(0, 0%, 100%);
+}
+
 .component-list > li.unavailable-component {
   background-color: hsl(280, 20%, 30%);
   color: hsl(0, 0%, 70%);
+
+  cursor: default;
 }
 
 .result-list {
@@ -125,7 +146,6 @@ header > * {
 
   text-align: center;
   line-height: var(--size);
-  font-weight: bold;
 }
 
 .result-list > li.result {
