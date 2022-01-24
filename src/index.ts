@@ -1,16 +1,16 @@
 import type { BaseComponent } from "./components.js";
-import type { Radk, Krad } from "./radk.js";
+import type { Radk, KanjiInfo } from "./kanjiInfo.js";
 
 import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
 import { Kanji } from "./kanji.js";
-import { loadRadk, loadKrad } from "./radk.js";
+import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
 
 async function init() {
-  // Preload radk.json and krad.json
-  const [radk, krad] = await Promise.all([loadRadk("radk.json"), loadKrad("krad.json")]);
+  // Preload radk.json and kanjiInfo.json
+  const [radk, kanjiInfo] = await Promise.all([loadRadk("radk.json"), loadKanjiInfo("kanjiInfo.json")]);
 
   // Initializes the component list
-  const componentPanel = new ComponentSearchPanel(radk, krad);
+  const componentPanel = new ComponentSearchPanel(radk, kanjiInfo);
 
   // Connects the results
   document.addEventListener("componentlistchanged", (e) => {

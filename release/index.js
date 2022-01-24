@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
 import { Kanji } from "./kanji.js";
-import { loadRadk, loadKrad } from "./radk.js";
+import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
-        // Preload radk.json and krad.json
-        const [radk, krad] = yield Promise.all([loadRadk("radk.json"), loadKrad("krad.json")]);
+        // Preload radk.json and kanjiInfo.json
+        const [radk, kanjiInfo] = yield Promise.all([loadRadk("radk.json"), loadKanjiInfo("kanjiInfo.json")]);
         // Initializes the component list
-        const componentPanel = new ComponentSearchPanel(radk, krad);
+        const componentPanel = new ComponentSearchPanel(radk, kanjiInfo);
         // Connects the results
         document.addEventListener("componentlistchanged", (e) => {
             const resultList = document.querySelector(".result-list");

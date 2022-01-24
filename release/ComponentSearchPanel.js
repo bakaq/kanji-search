@@ -50,11 +50,11 @@ function populateComponentList(kanjiComponents) {
     return componentButtons;
 }
 export class ComponentSearchPanel {
-    constructor(radk, krad) {
+    constructor(radk, kanjiInfo) {
         this.selectedKanji = [];
         // Init component list
         this.radk = radk;
-        this.krad = krad;
+        this.kanjiInfo = kanjiInfo;
         this.kanjiComponents = getKanjiComponents(radk);
         this.componentButtons = populateComponentList(this.kanjiComponents);
         // Connect the DOM
@@ -107,7 +107,7 @@ export class ComponentSearchPanel {
             // Finds all the components of all the selected kanji
             const availableComponents = [];
             for (const kanji of this.selectedKanji) {
-                for (const comp of kanji.getComponents(this.krad)) {
+                for (const comp of kanji.getComponents(this.kanjiInfo)) {
                     if (!availableComponents.includes(comp)) {
                         availableComponents.push(comp);
                     }

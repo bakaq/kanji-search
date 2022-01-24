@@ -4,7 +4,7 @@ import { Kanji } from "./kanji.js";
 
 // Legacy
 export type Radk = Record<BaseComponent, {strokes: number, kanji: Kanji[]}>;
-export type Krad = Record<string, BaseComponent[]>;
+export type KanjiInfo = Record<string, { strokes: number, components: BaseComponent[] }>;
 
 export async function loadRadk(url: string): Promise<Radk> {
   const request = await fetch(url);
@@ -21,8 +21,8 @@ export async function loadRadk(url: string): Promise<Radk> {
   return radk;
 }
 
-export async function loadKrad(url: string): Promise<Krad> {
+export async function loadKanjiInfo(url: string): Promise<KanjiInfo> {
   const request = await fetch(url);
-  const krad = await request.json();
-  return krad;
+  const kanjiInfo = await request.json();
+  return kanjiInfo;
 }

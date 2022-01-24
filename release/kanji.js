@@ -2,8 +2,8 @@ export class Kanji {
     constructor(char) {
         this.char = char;
     }
-    getComponents(krad) {
-        return krad[this.char];
+    getComponents(kanjiInfo) {
+        return kanjiInfo[this.char].components;
     }
     // Searchs the kanji with the given components
     static searchByComponents(componentList, radk) {

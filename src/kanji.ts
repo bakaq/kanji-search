@@ -1,4 +1,4 @@
-import type { Radk, Krad } from "./radk.js";
+import type { Radk, KanjiInfo } from "./kanjiInfo.js";
 import type { BaseComponent } from "./components.js";
 
 export class Kanji {
@@ -8,8 +8,8 @@ export class Kanji {
     this.char = char;
   }
 
-  getComponents(krad: Krad): BaseComponent[] {
-    return krad[this.char];
+  getComponents(kanjiInfo: KanjiInfo): BaseComponent[] {
+    return kanjiInfo[this.char].components;
   }
   
   // Searchs the kanji with the given components

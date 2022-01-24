@@ -22,10 +22,10 @@ export function loadRadk(url) {
         return radk;
     });
 }
-export function loadKrad(url) {
+export function loadKanjiInfo(url) {
     return __awaiter(this, void 0, void 0, function* () {
         const request = yield fetch(url);
-        const krad = yield request.json();
-        return krad;
+        const kanjiInfo = yield request.json();
+        return kanjiInfo;
     });
 }

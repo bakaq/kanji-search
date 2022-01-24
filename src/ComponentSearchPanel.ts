@@ -1,5 +1,5 @@
 import type { BaseComponent } from "./components.js";
-import type { Radk, Krad } from "./radk.js";
+import type { Radk, KanjiInfo } from "./kanjiInfo.js";
 
 import { Kanji } from "./kanji.js";
 
@@ -73,12 +73,12 @@ export class ComponentSearchPanel {
   componentButtons: HTMLElement[];
   selectedKanji: Kanji[] = [];
   radk: Radk;
-  krad: Krad;
+  kanjiInfo: KanjiInfo;
 
-  constructor(radk: Radk, krad: Krad) {
+  constructor(radk: Radk, kanjiInfo: KanjiInfo) {
     // Init component list
     this.radk = radk;
-    this.krad = krad;
+    this.kanjiInfo = kanjiInfo;
     this.kanjiComponents = getKanjiComponents(radk);
     this.componentButtons = populateComponentList(this.kanjiComponents);
 
@@ -138,7 +138,7 @@ export class ComponentSearchPanel {
       // Finds all the components of all the selected kanji
       const availableComponents: BaseComponent[] = [];
       for (const kanji of this.selectedKanji) {
-        for (const comp of kanji.getComponents(this.krad)) {
+        for (const comp of kanji.getComponents(this.kanjiInfo)) {
           if (!availableComponents.includes(comp)) {
             availableComponents.push(comp);
           }
