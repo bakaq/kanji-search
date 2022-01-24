@@ -36,6 +36,9 @@ function init() {
                 let resultElement = document.createElement("li");
                 resultElement.className = "result";
                 resultElement.innerText = result.char;
+                resultElement.addEventListener("click", (e) => {
+                    navigator.clipboard.writeText(e.target.innerText);
+                });
                 resultList.appendChild(resultElement);
             }
         });

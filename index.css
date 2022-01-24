@@ -104,6 +104,10 @@ header > * {
   background-color: hsl(260, 25%, 70%);
 }
 
+.component-list > li.component:not(.unavailable-component):active {
+  background-color: hsl(260, 25%, 50%);
+}
+
 .component-list > li.stroke-count {
   background-color: hsl(180, 50%, 95%);
 }
@@ -150,6 +154,17 @@ header > * {
 
 .result-list > li.result {
   background-color: hsl(280, 20%, 85%);
+  cursor: pointer;
+}
+
+.result-list > li.result:hover {
+  background-color: hsl(280, 20%, 70%);
+  cursor: pointer;
+}
+
+.result-list > li.result:active {
+  background-color: hsl(280, 20%, 60%);
+  cursor: pointer;
 }
 
 .result-list > li.stroke-count {
