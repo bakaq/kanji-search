@@ -12,15 +12,28 @@
 // 
 // You should have received a copy of the GNU General Public License along with
 // this program. If not, see <https://www.gnu.org/licenses/>.
+import { alternateComponentInfo, getDisplayComponent, getBaseComponent, } from "./components.js";
 import { Kanji } from "./kanji.js";
-// Gets all the kanji components from radk
+// Gets all the kanji components from radk and alternate components
+// TODO: put this in components.ts
 function getKanjiComponents(radk) {
     const kanjiComponentsArray = [];
-    for (const [comp, { strokes, }] of Object.entries(radk)) {
+    // From radk
+    for (const [comp, { strokes }] of Object.entries(radk)) {
+        const displayComp = getDisplayComponent(comp);
+        if (kanjiComponentsArray[strokes] === undefined) {
+            kanjiComponentsArray[strokes] = [displayComp];
+        }
+        else {
+            kanjiComponentsArray[strokes].push(displayComp);
+        }
+    }
+    // From alternateComponentInfo
+    for (const [comp, { strokes }] of Object.entries(alternateComponentInfo)) {
         if (kanjiComponentsArray[strokes] === undefined) {
             kanjiComponentsArray[strokes] = [comp];
         }
-        else {
+        else if (!kanjiComponentsArray[strokes].includes(comp)) {
             kanjiComponentsArray[strokes].push(comp);
         }
     }
@@ -74,7 +87,7 @@ export class ComponentSearchPanel {
         for (const comp of this.componentButtons) {
             comp.addEventListener("click", (event) => {
                 const compButton = event.target;
-                const comp = compButton.innerText;
+                const comp = getBaseComponent(compButton.innerText);
                 // Handle state change and change DOM
                 switch (this.state[comp]) {
                     case "unavailable":
@@ -96,7 +109,7 @@ export class ComponentSearchPanel {
         this.state = {};
         for (const { strokes, components } of this.kanjiComponents) {
             for (const comp of components) {
-                this.state[comp] = "available";
+                this.state[getBaseComponent(comp)] = "available";
             }
         }
     }
@@ -157,7 +170,7 @@ export class ComponentSearchPanel {
         };
         // If className isn't right, change it to reflect the state
         for (const componentButton of this.componentButtons) {
-            const compState = this.state[componentButton.innerText];
+            const compState = this.state[getBaseComponent(componentButton.innerText)];
             if (componentButton.className !== stateToClasses[compState]) {
                 componentButton.className = stateToClasses[compState];
             }
