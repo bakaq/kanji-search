@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <!--
   Copyright 2022 Kauê Hunnicutt Bazilli
 
@@ -21,10 +21,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="module" src="release/index.js" defer></script>
   </head>
   <body>
     <header>
       <h1 class="header-title">Kanji Search</h1>
+      <div class="header-links">
+        <a href="https://bakaq.github.io/">
+          <i class="fa fa-home"></i>
+        </a>
+        <a href="https://github.com/bakaq/kanji-search">
+          <i class="fa fa-github"></i>
+        </a>
+      </div>
     </header>
     <main>
       <div class="results">
@@ -56,7 +66,6 @@
       </a>
       .
     </footer>
-    <script type="module" src="release/index.js"></script>
     <script>
       // TODO: This is VERY ugly, find a better way in CSS
       function fitMain() {

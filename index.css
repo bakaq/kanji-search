@@ -54,7 +54,7 @@ header {
   background-color: hsl(40, 80%, 75%);
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -70,6 +70,24 @@ footer {
 }
 
 /* Classes */
+
+.header-links {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  gap: var(--global-padding);
+  align-items: center;
+  font-size: 1.2em;
+  width: auto;
+}
+
+.header-links > a:link {
+  color: unset;
+}
+
+.header-links > a:visited {
+  color: unset;
+}
 
 .header-title {
   font-size: 1.2em;
