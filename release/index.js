@@ -23,6 +23,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
 import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
+function showKanjiCopyLog(kanjiChar) {
+    // TODO: proper null handling
+    const logger = document.querySelector(".logger");
+    logger.innerText = `Copied ${kanjiChar} to clipboard`;
+}
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
         // Preload radk.json and kanjiInfo.json
@@ -72,7 +77,20 @@ function init() {
                     resultElement.className = "result";
                     resultElement.innerText = kanji.char;
                     resultElement.addEventListener("click", (e) => {
-                        navigator.clipboard.writeText(e.target.innerText);
+                        const kanjiChar = e.target.innerText;
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(kanjiChar);
+                        }
+                        else {
+                            // Mobile workaround
+                            const tmpText = document.createElement("textarea");
+                            tmpText.value = kanjiChar;
+                            document.body.appendChild(tmpText);
+                            tmpText.select();
+                            document.execCommand("copy");
+                            document.body.removeChild(tmpText);
+                        }
+                        showKanjiCopyLog(kanjiChar);
                     });
                     resultList.appendChild(resultElement);
                 }

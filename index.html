@@ -30,52 +30,57 @@
           content="A tool to search for kanji by multiple components">
     <!-- Assets -->
     <link rel="stylesheet" href="index.css">
+    <!-- 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    -->
     <!-- Scripts -->
     <script type="module" src="release/index.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1 class="header-title">Kanji Search</h1>
-      <div class="header-links">
-        <a href="https://bakaq.github.io/">
-          <i class="fa fa-home"></i>
+    <div class="ui-wrapper">
+      <header>
+        <h1 class="header-title">Kanji Search</h1>
+        <div class="logger">Click on a kanji to copy</div>
+        <div class="header-links">
+          <a href="https://bakaq.github.io/">
+            <i class="fa fa-home"></i>
+          </a>
+          <a href="https://github.com/bakaq/kanji-search">
+            <i class="fa fa-github"></i>
+          </a>
+        </div>
+      </header>
+      <main>
+        <div class="results">
+          <ul class="result-list" lang="jp">
+          </ul>
+        </div>
+        <div class="search-controls">
+          <!-- TODO: Hardcode this -->
+          <ul class="component-list" lang="jp"></ul>
+        </div>
+      </main>
+      <footer>
+        This site uses the
+        <a href="http://www.edrdg.org/wiki/index.php/KANJIDIC_Project">
+          Kanjidic2
         </a>
-        <a href="https://github.com/bakaq/kanji-search">
-          <i class="fa fa-github"></i>
+        and
+        <a href="http://www.edrdg.org/krad/kradinf.html">
+          Radkfile
         </a>
-      </div>
-    </header>
-    <main>
-      <div class="results">
-        <ul class="result-list" lang="jp">
-        </ul>
-      </div>
-      <div class="search-controls">
-        <!-- TODO: Hardcode this -->
-        <ul class="component-list" lang="jp"></ul>
-      </div>
-    </main>
-    <footer>
-      This site uses the
-      <a href="http://www.edrdg.org/wiki/index.php/KANJIDIC_Project">
-        Kanjidic2
-      </a>
-      and
-      <a href="http://www.edrdg.org/krad/kradinf.html">
-        Radkfile
-      </a>
-      dictionary files. These files
-      are the property of the
-      <a href="http://www.edrdg.org/">
-        Electronic Dictionary Research and Development Group
-      </a>
-      , and are used in conformance with the Group's
-      <a href="http://www.edrdg.org/edrdg/licence.html">
-        licence
-      </a>
-      .
-    </footer>
+        dictionary files. These files
+        are the property of the
+        <a href="http://www.edrdg.org/">
+          Electronic Dictionary Research and Development Group
+        </a>
+        , and are used in conformance with the Group's
+        <a href="http://www.edrdg.org/edrdg/licence.html">
+          licence
+        </a>
+        .
+      </footer>
+    </div>
     <script>
       // TODO: This is VERY ugly, find a better way in CSS
       function fitMain() {

@@ -20,6 +20,12 @@ import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
 import { Kanji } from "./kanji.js";
 import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
 
+function showKanjiCopyLog(kanjiChar: string) {
+  // TODO: proper null handling
+  const logger = document.querySelector(".logger")! as HTMLElement;
+  logger.innerText = `Copied ${kanjiChar} to clipboard`;
+}
+
 async function init() {
   // Preload radk.json and kanjiInfo.json
   const [radk, kanjiInfo] = await Promise.all([
@@ -77,7 +83,19 @@ async function init() {
           resultElement.className = "result";
           resultElement.innerText = kanji.char;
           resultElement.addEventListener("click", (e) => {
-            navigator.clipboard.writeText((e.target! as HTMLElement).innerText);
+            const kanjiChar = (e.target! as HTMLElement).innerText;
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(kanjiChar);
+            } else {
+              // Mobile workaround
+              const tmpText = document.createElement("textarea");
+              tmpText.value = kanjiChar;
+              document.body.appendChild(tmpText);
+              tmpText.select();
+              document.execCommand("copy");
+              document.body.removeChild(tmpText);
+            }
+            showKanjiCopyLog(kanjiChar);
           });
           resultList.appendChild(resultElement);
         }
