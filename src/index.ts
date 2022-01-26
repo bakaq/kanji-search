@@ -20,10 +20,10 @@ import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
 import { Kanji } from "./kanji.js";
 import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
 
-function showKanjiCopyLog(kanjiChar: string) {
+function log(text: string) {
   // TODO: proper null handling
   const logger = document.querySelector(".logger")! as HTMLElement;
-  logger.innerText = `Copied ${kanjiChar} to clipboard`;
+  logger.innerText = text;
 }
 
 async function init() {
@@ -95,13 +95,29 @@ async function init() {
               document.execCommand("copy");
               document.body.removeChild(tmpText);
             }
-            showKanjiCopyLog(kanjiChar);
+            log(`Copied ${kanjiChar} to clipboard`);
           });
           resultList.appendChild(resultElement);
         }
       }
     }
   );
+}
+
+// Register service worker
+if ("serviceWorker" in navigator) {
+  // Listen from service workers
+  navigator.serviceWorker.addEventListener("message", (event) => {
+    log(event.data as string);
+  });
+
+    navigator.serviceWorker.register("./sw.js").then(register => {
+      log("Registered service worker");
+    }).catch(e => {
+      log("Failed to register a service worker");
+    });
+} else {
+  log("No service worker");
 }
 
 init();

@@ -9,5 +9,6 @@
             "dom.iterable"
         ]
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*"],
+    "exclude": ["src/service-worker/**/*"]
 }

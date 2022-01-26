@@ -23,10 +23,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
 import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
-function showKanjiCopyLog(kanjiChar) {
+function log(text) {
     // TODO: proper null handling
     const logger = document.querySelector(".logger");
-    logger.innerText = `Copied ${kanjiChar} to clipboard`;
+    logger.innerText = text;
 }
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -90,12 +90,27 @@ function init() {
                             document.execCommand("copy");
                             document.body.removeChild(tmpText);
                         }
-                        showKanjiCopyLog(kanjiChar);
+                        log(`Copied ${kanjiChar} to clipboard`);
                     });
                     resultList.appendChild(resultElement);
                 }
             }
         });
     });
+}
+// Register service worker
+if ("serviceWorker" in navigator) {
+    // Listen from service workers
+    navigator.serviceWorker.addEventListener("message", (event) => {
+        log(event.data);
+    });
+    navigator.serviceWorker.register("./sw.js").then(register => {
+        log("Registered service worker");
+    }).catch(e => {
+        log("Failed to register a service worker");
+    });
+}
+else {
+    log("No service worker");
 }
 init();
