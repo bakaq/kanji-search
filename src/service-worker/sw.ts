@@ -32,7 +32,6 @@ _self.addEventListener("install", (e) => {
 
 // Delete old caches when updating
 _self.addEventListener("activate", (e) => {
-  console.log("ACTIVATING!!!!!");
   e.waitUntil(caches.keys().then((keyList) => {
     return Promise.all(keyList.map((key) => {
       if (key == cacheName) {
@@ -47,13 +46,6 @@ _self.addEventListener("activate", (e) => {
 _self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => {
-      console.log("Tried to access:");
-      console.log(e.request);
-      console.log("With response in cache:")
-      console.log(response);
-      _self.clients.matchAll().then(all => all.forEach(client => {
-        client.postMessage("Inside service worker");
-      }));
       return response || fetch(e.request);
     })
   );

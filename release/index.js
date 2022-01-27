@@ -100,17 +100,9 @@ function init() {
 }
 // Register service worker
 if ("serviceWorker" in navigator) {
-    // Listen from service workers
-    navigator.serviceWorker.addEventListener("message", (event) => {
-        log(event.data);
-    });
-    navigator.serviceWorker.register("./sw.js").then(register => {
-        log("Registered service worker");
-    }).catch(e => {
-        log("Failed to register a service worker");
-    });
+    navigator.serviceWorker.register("./sw.js");
 }
 else {
-    log("No service worker");
+    throw "No service worker support";
 }
 init();
