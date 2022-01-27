@@ -1,6 +1,6 @@
 /// <reference lib="WebWorker" />
 var _self = self;
-var cacheName = "kanji-search-v7";
+var cacheName = "kanji-search-v8";
 var filesToCache = [
     "./",
     "manifest.json",
