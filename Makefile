@@ -35,3 +35,13 @@ release:
 .PHONY: clean
 clean:
 	rm -rf release
+
+# This doesn't clean the radk.json and kanjiInfo.json files
+.PHONY: softclean
+softclean:
+	rm -rf release/main
+	rm -rf release/manifest.json
+	rm -rf release/sw.js
+	rm -rf release/manifest.json
+	rm -rf release/index.*
+	rm -rf release/images
