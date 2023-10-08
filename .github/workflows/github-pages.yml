@@ -11,8 +11,11 @@ jobs:
       uses: actions/configure-pages@v3
     - name: Checkout repo
       uses: actions/checkout@v4
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
     - name: Build release
-      run: make all
+      run: |
+        nix develop --command make all
     - name: Upload Github Pages artifact
       uses: actions/upload-pages-artifact@v1
       with:
