@@ -1,12 +1,12 @@
 // Copyright 2023 Kauê Hunnicutt Bazilli
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { BaseComponent } from "./components.js";
-import type { Radk, KanjiInfo } from "./kanjiInfo.js";
+import type { BaseComponent } from "./components";
+import type { Radk, KanjiInfo } from "./kanjiInfo";
 
-import { ComponentSearchPanel } from "./ComponentSearchPanel.js";
-import { Kanji } from "./kanji.js";
-import { loadRadk, loadKanjiInfo } from "./kanjiInfo.js";
+import { ComponentSearchPanel } from "./ComponentSearchPanel";
+import { Kanji } from "./kanji";
+import { loadRadk, loadKanjiInfo } from "./kanjiInfo";
 
 function log(text: string) {
   // TODO: proper null handling

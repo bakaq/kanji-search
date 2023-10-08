@@ -1,9 +1,9 @@
 // Copyright 2023 Kauê Hunnicutt Bazilli
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { BaseComponent } from "./components.js";
+import type { BaseComponent } from "./components";
 
-import { Kanji } from "./kanji.js";
+import { Kanji } from "./kanji";
 
 // Legacy
 export type Radk = Record<BaseComponent, {strokes: number, kanji: Kanji[]}>;

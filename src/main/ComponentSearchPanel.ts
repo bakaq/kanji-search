@@ -1,16 +1,16 @@
 // Copyright 2023 Kauê Hunnicutt Bazilli
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { Component, BaseComponent } from "./components.js";
-import type { Radk, KanjiInfo } from "./kanjiInfo.js";
+import type { Component, BaseComponent } from "./components";
+import type { Radk, KanjiInfo } from "./kanjiInfo";
 
 import {
   alternateComponentInfo,
   getDisplayComponent,
   getBaseComponent,
-} from "./components.js"; 
+} from "./components"; 
 
-import { Kanji } from "./kanji.js";
+import { Kanji } from "./kanji";
 
 type ComponentState = "available" | "unavailable" | "active";
 type ComponentsWithStrokeCounts = Array<{

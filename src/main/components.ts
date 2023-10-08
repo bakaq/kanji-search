@@ -1,7 +1,7 @@
 //  Copyright 2023 Kauê Hunnicutt Bazilli
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import type { Radk } from "./kanjiInfo.js"
+import type { Radk } from "./kanjiInfo"
 
 // TODO: Make a exhaustive Union
 export type BaseComponent = string;
