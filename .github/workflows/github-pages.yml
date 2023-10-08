@@ -13,20 +13,10 @@ jobs:
       uses: actions/checkout@v4
     - name: Build release
       run: make all
-    - name: Assemble release folder
-      run: |
-        mkdir release-gh-pages
-        cp -r release release-gh-pages/
-        cp sw.js release-gh-pages/
-        cp index.css release-gh-pages/
-        cp index.html release-gh-pages/
-        cp manifest.json release-gh-pages/
-        cp kanjiInfo.json release-gh-pages/
-        cp radk.json release-gh-pages/
     - name: Upload Github Pages artifact
       uses: actions/upload-pages-artifact@v1
       with:
-        path: "./release-gh-pages"
+        path: "./release"
   deploy:
     permissions:
       contents: read

@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"rootDir": ".",
+		"outDir": "../release",
+		"target": "ES2016",
+		"strict": true,
+		"composite": true,
+		"declarationMap": true
+	}
+}

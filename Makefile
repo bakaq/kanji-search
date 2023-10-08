@@ -1,9 +1,29 @@
-PROJECT_SOURCES = $(wildcard src/*.ts)
+PROJECT_SOURCES = $(wildcard src/main/* src/sw/*)
 
-all: release/index.js sw.js
+.PHONY: all
+all: release/main/index.js release/radk.json release/index.html release/index.css
 
-release/index.js: $(PROJECT_SOURCES)
-	tsc
+release/index.html: src/index.html
+	cp src/index.html release/
 
-sw.js: src/service-worker/sw.ts
-	tsc src/service-worker/sw.ts --lib webworker,es6 --outFile sw.js
+release/index.css: src/index.css
+	cp src/index.css release/
+
+# This is actually all the .js files, including sw.js
+release/main/index.js: $(PROJECT_SOURCES) | release
+	tsc --build src/main
+	mv release/sw/sw.js release/
+	rm release/sw -r
+
+# This is actually both radk.json and kanjiInfo.json
+release/radk.json: scripts/buildjson.py | release
+	./scripts/buildjson.py
+	mv radk.json release/
+	mv kanjiInfo.json release/
+
+release:
+	mkdir -p release
+
+.PHONY: clean
+clean:
+	rm -rf release

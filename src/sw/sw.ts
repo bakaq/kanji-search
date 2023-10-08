@@ -1,3 +1,5 @@
+/// <reference no-default-lib="true" />
+/// <reference lib="ES2020" />
 /// <reference lib="WebWorker" />
 
 const _self = (self as unknown) as ServiceWorkerGlobalScope;
