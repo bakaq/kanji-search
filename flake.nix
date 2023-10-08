@@ -12,6 +12,7 @@
         pkgs = import nixpkgs { inherit system; };
         python-packages = ps: with ps; [
           beautifulsoup4
+          lxml
           requests
         ];
       in
