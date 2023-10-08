@@ -1,10 +1,6 @@
-/// <reference no-default-lib="true" />
-/// <reference lib="ES2020" />
-/// <reference lib="WebWorker" />
-
 const _self = (self as unknown) as ServiceWorkerGlobalScope;
 
-const cacheName = "kanji-search-v8";
+const cacheName = "kanji-search-v9";
 
 const filesToCache = [
   "./",
@@ -15,11 +11,11 @@ const filesToCache = [
   "index.css",
   "radk.json",
   "kanjiInfo.json",
-  "release/index.js",
-  "release/components.js",
-  "release/kanji.js",
-  "release/kanjiInfo.js",
-  "release/ComponentSearchPanel.js"
+  "main/index.js",
+  "main/components.js",
+  "main/kanji.js",
+  "main/kanjiInfo.js",
+  "main/ComponentSearchPanel.js"
 ];
 
 
