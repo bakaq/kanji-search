@@ -3,7 +3,7 @@
 # This script builds easily parsable json files with
 # information from RADKFILE and KANJIDICT2
 #
-# Copyright 2022 Kauê Hunnicutt Bazilli
+# Copyright 2023 Kauê Hunnicutt Bazilli
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import asyncio

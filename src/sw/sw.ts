@@ -1,3 +1,6 @@
+// Copyright 2023 Kauê Hunnicutt Bazilli
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 const _self = (self as unknown) as ServiceWorkerGlobalScope;
 
 const cacheName = "kanji-search-v9";
