@@ -16,7 +16,7 @@ jobs:
     - name: Assemble release folder
       run: |
         mkdir release-gh-pages
-        cp release release-gh-pages/
+        cp -r release release-gh-pages/
         cp sw.js release-gh-pages/
         cp index.css release-gh-pages/
         cp index.html release-gh-pages/
