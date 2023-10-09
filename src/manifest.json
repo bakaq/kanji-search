@@ -2,7 +2,7 @@
     "name": "Kanji Search",
     "icons": [
         {
-            "src": "images/icons/logo.png",
+            "src": "images/icons/logo.svg",
             "sizes": "any",
             "type": "image/svg+xml",
             "purpose": "any"
