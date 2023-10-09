@@ -3,13 +3,13 @@
 
 const _self = (self as unknown) as ServiceWorkerGlobalScope;
 
-const cacheName = "kanji-search-v9";
+const cacheName = "kanji-search-v10";
 
 const filesToCache = [
   "./",
   "manifest.json",
-  "images/icons/144.png",
-  "images/icons/128.png",
+  "images/icons/logo.svg",
+  "favicon.ico",
   "index.html",
   "index.css",
   "radk.json",
@@ -20,7 +20,6 @@ const filesToCache = [
   "main/kanjiInfo.js",
   "main/ComponentSearchPanel.js"
 ];
-
 
 // Cache all of the content
 _self.addEventListener("install", (e) => {

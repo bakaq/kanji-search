@@ -3,7 +3,10 @@ PROJECT_SOURCES = $(wildcard src/main/* src/sw/*)
 .PHONY: all
 all: release/main/index.js release/radk.json \
 	 release/index.html release/index.css release/manifest.json \
-	 release/images
+	 release/images release/favicon.ico
+
+release/favicon.ico: src/favicon.ico
+	cp -r src/favicon.ico release/
 
 release/images: src/images
 	cp -r src/images release/
