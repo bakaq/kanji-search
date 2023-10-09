@@ -3,7 +3,7 @@
 
 const _self = (self as unknown) as ServiceWorkerGlobalScope;
 
-const cacheName = "kanji-search-v11";
+const cacheName = "kanji-search-v12";
 
 const filesToCache = [
   "./",
