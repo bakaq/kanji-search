@@ -94,9 +94,9 @@ async function init() {
 
 // Register service worker
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js")
+  navigator.serviceWorker.register("./sw.js")
 } else {
-  throw "No service worker support"
+  console.error("No service worker support")
 }
 
 init();
